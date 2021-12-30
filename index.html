@@ -2,6 +2,9 @@
 <!-- <script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_delays/js/vismemCC.js"></script> -->
 <script src="https://timbrady.org/turk/TimTurkTools.js"></script>
 <script src="js/vismemCC_simon.js"></script>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
 <!--
 //////////////////////////////////////////////////////////////////////////////////
 -->
@@ -55,6 +58,24 @@
       margin: 0 auto;
     }
 
+    .continueExp:hover{
+      color: white;
+    }
+
+    .continueExp {
+      color: rgb(200,200,200);
+      text-decoration: none;
+    }
+
+    .continueButton {
+      width: 100px;
+      text-align: center;
+      border: 4px outset gray;
+      background: gray;
+      padding: 5px;
+      margin: 0 auto;
+    }
+
     #meter{
     width: 10cm;
     height: 10cm;
@@ -80,6 +101,7 @@ Saving data...
 
 <!-- make submit button -->
 <input type="submit" value="Submit" name="submitButton" id="submitButton" style="display: none">
+
 
 <!--
 //////////////////////////////////////////////////////////////////////////////////
@@ -157,12 +179,15 @@ Saving data...
 -->
 
 <div id='frame1'; class='trialDiv'>
-    <p> อยากจะให้ทำอะไรสักอย่าง
+    <p> 
+    <br> อยากจะให้ทำอะไรสักอย่าง
     <br> แต่ยังไม่แน่ใจ
-    <br> เดี๋ยวรูปแล้วจะบอกนะ
-    <br> อดใจรออีกหน่อย
+    <br>
+    <br>
+    <div class="continueButton">
+      <a href="#" id="cont1" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
     
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
 </div>
 
 <div id='frame2'; class='trialDiv'>
@@ -170,34 +195,46 @@ Saving data...
     <br> อะไรจะโผล่มาแบบนี้
     <br> พยายามจำตำแหน่งเอาไว้
 
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+    <div class="continueButton">
+      <a href="#" id="cont2" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame3'; class='trialDiv'>
     <p> 
     <br> แล้วก็จะหายไป
+    <br>
 
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+    <div class="continueButton">
+      <a href="#" id="cont3" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame4'; class='trialDiv'>
     <p> 
     <br> พอมีสัญญาณให้ตอบก็ตอบได้เลย
+    <br> กดลงไปบนกลมๆที่มองเห็นได้เลยเพื่อตอบ 
 
-    <br> <br> กดลงไปบนกลมๆที่มองเห็นได้เลยเพื่อตอบ </p>
+    <div class="continueButton">
+      <a href="#" id="cont4" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='frame5'; class='trialDiv'>
     <p> 
     <br> จะเป็นเช่นนี้ไปเรื่อยๆ 
     <br> พร้อมไหม
-    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+
+    <div class="continueButton">
+      <a href="#" id="cont5" class="continueExp"> ไปค่ะพี่สุชาติ </a>
+    </div>
 </div>
 
 <div id='rule0'; class='trialDiv'>
     <p> 
-    <br> ให้กดปุ่มตามลำดับที่จำไว้
-    <br> 
+    <br> ถ้าพื้นหลังเป็น <font color="#8abaae"> <b>สีเขียว</b> </font> ให้กดปุ่ม <b>ตามลำดับ</b> ที่จำไว้
+    <br> ถ้าพื้นหลังเป็น <font color="#f1959b"> <b>สีแดง</b> </font> ให้กดปุ่มต <b>ย้อนกลับ</b> จากลำดับที่จำไว้
+
     <br> <br> กรุณาใช้ <b>เมาส์</b> กดลงบนปุ่ม </p>
 </div>
 
@@ -245,8 +282,14 @@ Saving data...
           var nSeq = 4;
           var circRot= 0;
           // var colRot= 0;
+          var circcolor = '#D3D3D3';    // light gray
+          var hovercolor = '#FFFFFF';   // dark gray
+          var clickedcolor = '#FFFFFF'; // white
+          var circborder = '#000000';   // black
 
-          var nullcolor = []; for (var idot =0; idot<numDots;idot++){nullcolor[idot] = '#FFFFFF'}
+
+          var nullcolor = []; for (var idot =0; idot<numDots;idot++){nullcolor[idot] = circcolor}
+          var borders = []; for (var idot =0; idot<numDots;idot++){borders[idot] = circborder}
           const testtemp = []; for (var idot =0; idot<numDots;idot++){testtemp[idot] = 99999}
 
           var stimdur = 500;
@@ -259,6 +302,8 @@ Saving data...
           var presTime=1000;
           var delayTime=1000;
           var feedbacktime=1000;
+
+
 
           var bgcolor = ["#f1959b","#8abaae"];
           var bgx = Math.round(Math.random());
@@ -311,7 +356,7 @@ Saving data...
             var color=[];
             for(ic=0;ic<colAng.length;ic++){
                 if (colAng[ic] == 99999){
-                    color[ic]='#FFFFFF'
+                    color[ic]=circcolor
                 }else{
                     color[ic]=angle2HEX(colAng[ic])
                 }
@@ -319,11 +364,23 @@ Saving data...
             return color 
           }
 
-          function makeCircles(currColor){
+          function paintborder(colAng){
+            var color=[];
+            for(ic=0;ic<colAng.length;ic++){
+                if (colAng[ic] == 99999){
+                    color[ic]=circborder
+                }else{
+                    color[ic]=angle2HEX(colAng[ic])
+                }
+            }
+            return color 
+          }
+
+          function makeCircles(currColor,bordercolor){
             // Draw circles
 
             for(i=0;i<numDots;i++){
-                makeCircle('dot'+i,xPos[i],yPos[i],objSize+2,false,0,'#000000','#000000');
+                makeCircle('dot'+i,xPos[i],yPos[i],objSize+2,false,0,bordercolor[i],bordercolor[i]);
                 makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
                 // makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
             }
@@ -366,8 +423,6 @@ Saving data...
               makeBackground(bgcolor[bgx])
               makeCrosshair();
               drawObjects(ctx1,objects);
-              $('#rule0').hide();
-              $('#rule1').hide();
               // var curtrialStruct = {};
               
               // curtrialStruct.colordist = colordist;
@@ -418,16 +473,9 @@ Saving data...
              clear();
              
              makeBackground(bgcolor[bgx])
-             makeCircles(nullcolor);
+             makeCircles(nullcolor,borders);
              makeCrosshair();
              drawObjects(ctx1,objects);
-             if (bgx == 0){
-                  $('#rule0').show();
-             }
-             else {
-                  $('#rule1').show();
-             }
-             
 
              var xx = Math.floor(Math.random()*360);
              const dotid = []; for (var idot =0; idot<numDots;idot++){dotid[idot] = idot}
@@ -466,11 +514,7 @@ Saving data...
                   Cue(setthistime[setthistime.length-1]);
                 }
              }
-
-
-
           }
-
 
           function initialT(color,waittime){
             // Initial
@@ -481,9 +525,10 @@ Saving data...
                 clear();
                 
                 makeBackground(bgcolor[bgx])
-                makeCircles(color);
+                makeCircles(color,borders);
                 makeCrosshair();
                 drawObjects(ctx1,objects);
+
                 var dT = new Date();
                 STT=dT.getTime();
             },waittime);
@@ -496,7 +541,7 @@ Saving data...
                 erase(ctx1);
                 clear();
                 makeBackground(bgcolor[bgx])
-                makeCircles(nullcolor);
+                makeCircles(nullcolor,borders);
                 makeCrosshair();
                 drawObjects(ctx1,objects);
                 var dST = new Date();
@@ -518,7 +563,7 @@ Saving data...
                 currProbe=0;
                 moveLast = 0 ;
                 makeBackground(bgcolor[bgx])
-                makeCircles(nullcolor);
+                makeCircles(nullcolor,borders);
                 makeCrosshair();
                 drawObjects(ctx1,objects);
                 
@@ -535,7 +580,7 @@ Saving data...
                 erase(ctx1);
                 clear();
                 makeBackground(bgcolor[bgx])
-                makeCircles(nullcolor);
+                makeCircles(nullcolor,borders);
                 makeCrosshair();
                 drawObjects(ctx1,objects);
                 trialIsOver();
@@ -551,9 +596,12 @@ Saving data...
             // drawObjects(ctx1,objects);
 
             // Begin
+            $('#frame5').hide();
+            $('#rule0').show();
+             
             showTrial();
             startTrialTime = new Date();
-            $('.trialDiv').hide();
+            // $('.trialDiv').hide();
 
         }
 
@@ -563,44 +611,36 @@ Saving data...
                 myCanvas.style.border = 'solid' 
                  // Draw first fixation 
                 makeCrosshair();
-                makeCircles(nullcolor);
+                makeCircles(nullcolor,borders);
                 drawObjects(ctx1,objects);
                 $('#frame1').show();
                 // Begin
-                $(document).on("keypress.trialWait", PressedKey);
-
-                function PressedKey(evt) {
-                  evt.preventDefault(); 
-                    if (evt.which == 32) {
-                        showPractice_f2();
-                    }
-                }
+                $('#cont1').on('click',showPractice_f2);
             }
 
         }
 
         function showPractice_f2(){
+            $('#instructions').hide();
             $('#frame1').hide();
             var jj = Math.round(Math.random(1)*numDots);
             const temp = Object.values(Object.assign({}, testtemp));
             temp[jj] = 20;
             testcolor = paintcolor(temp);
             makeCrosshair();
-            makeCircles(testcolor);
+            makeCircles(testcolor,borders);
             drawObjects(ctx1,objects);
             $('#frame2').show();
-            $(document).on("keypress.trialWait", PressedKey);
-            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f3();}}
+            $('#cont2').click(showPractice_f3);
         }
 
         function showPractice_f3(){
             $('#frame2').hide();
             makeCrosshair();
-            makeCircles(nullcolor);
+            makeCircles(nullcolor,borders);
             drawObjects(ctx1,objects);
             $('#frame3').show();
-            $(document).on("keypress.trialWait", PressedKey);
-            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f4();}}
+            $('#cont3').click(showPractice_f4);
         }
 
         function showPractice_f4(){
@@ -615,8 +655,7 @@ Saving data...
                 drawObjects(ctx1,objects);
                 
                 $('#frame4').show();
-                $(document).on("keypress.trialWait", PressedKey);
-              function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f5();}}
+                $('#cont4').click(showPractice_f5);
         }
 
         function showPractice_f5(){
@@ -627,10 +666,10 @@ Saving data...
             erase(ctx1);
             clear();
             makeCrosshair();
-            makeCircles(nullcolor);
+            makeCircles(nullcolor,borders);
             drawObjects(ctx1,objects);
             $('#frame5').show();
-            $(document).on("keypress.trialWait", function press4 (evt) { evt.preventDefault();  if (IsTurkPreview() == true) {showFirstTrial();}});
+            $('#cont5').click(showFirstTrial);
         }
 
         function Done() {
