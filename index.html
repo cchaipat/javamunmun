@@ -242,7 +242,7 @@ Saving data...
           var rt=[];
           var moveLast=0;
           
-          var initTime=1000;
+          var initTime=3000;
           var presTime=1000;
           var delayTime=1000;
           
@@ -417,9 +417,12 @@ Saving data...
                 initialT(testcolors[iSeq],setthistime[2*iSeq]);
                 RemoveStim(setthistime[(2*iSeq)+1]);
                 if (iSeq == nSeq-1){
-                  Cue(setthistime[setthistime.length]);
+                  Cue(setthistime[setthistime.length-1]);
                 }
              }
+
+
+
           }
 
 

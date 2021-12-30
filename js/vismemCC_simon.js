@@ -336,7 +336,8 @@ $(document).keypress(function(e) {
 });
 
 $(document).on("mousedown", function(e) {
-    inBound=e.toElement.id=='myCanvas';
+    // inBound=e.toElement.id=='myCanvas';
+    inBound=e.target.id=='myCanvas';
     hasMoved=moveLast>10;
     waitTime=endTime();
     hasWaited=waitTime>150;
@@ -376,7 +377,7 @@ $(document).on("mouseup", function(e) {
 
 $(document).on("mousemove", function(e) {
     // console.log(isTrain)
-    inBound=e.toElement.id=='myCanvas';
+    inBound=e.target.id=='myCanvas';
     if(isTest & inBound | isTrain){
         
         xdif=centerX-e.offsetX;
