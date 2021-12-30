@@ -1,0 +1,648 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://psyc241.ucsd.edu/Chaipat/TB_PCL_vWM_delays/js/vismemCC.js"></script> -->
+<!-- <script src="https://timbrady.org/turk/TimTurkTools.js"></script> -->
+<script src="js/vismemCC_simon.js"></script>
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<style>
+    .trialDiv {
+      /* border: 2px solid gray;*/
+      border: 0px;
+      padding: auto;
+      width: auto;
+      position: relative;
+      top: 50px;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+      text-align: center;
+      display: none;
+    }
+
+    body {
+      font-family: Arial, Helvetica;
+      font-size: 12pt;
+    }
+
+    #submitButton {
+      display: none;
+    }
+
+    #instructions {
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #startExperiment {
+      color: rgb(200,200,200);
+      text-decoration: none;
+    }
+
+    #startExperiment:hover{
+      color: white;
+    }
+
+    #startExperimentButton {
+      width: 200px;
+      text-align: center;
+      border: 4px outset gray;
+      background: gray;
+      padding: 5px;
+      margin: 0 auto;
+    }
+
+    #meter{
+    width: 10cm;
+    height: 10cm;
+    }
+
+    .instr {
+      display: none;
+    }
+    #done {
+    display: none;
+    }
+
+</style>
+
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!--say something when done -->
+<div id="done" class="taskDiv">
+Saving data...
+</div>
+
+<!-- make submit button -->
+<input type="submit" value="Submit" name="submitButton" id="submitButton" style="display: none">
+
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<!-- make instruction -->
+<div id="instructions">
+  <h2> สวัสดีชาวโลก 
+    <br> ต่อไปเป็นการทดสอบการทำงานสมองของคุณ ช่วยพยายามกันหน่อยนะ</h2>
+  <p>เดี๋ยวจะมีวงกลมหลายวงโผล่ขึ้นมา <b>พยายามจำกันหน่อย</b> แล้วเดี๋ยวจะต้องตอบทีหลังนะ</p>
+    
+  <p> <b> ถ้าอยากโดนก็กดขยายหน้าจอให้ใหญ่เบิ้มๆหน่อยนะ ขอสัก 400 pixels </b> 
+  <br> กด <b>F11</b> สิจ๊ะถ้าตัวเธอว์ใช้ windows
+  </p>
+  <p style="font:5px"> กดปุ่มยินยอมถ้าเธอว์พร้อมจะลุยมาตั้งนานแล้ว </p>
+  
+  <div id="startExperimentButton">
+    <a href="#" id="startExperiment">เอาเลยเถอะ</a>
+  </div>
+  
+  <p></p>
+
+
+  <div id="consent" style="height:120px; border:1px solid #ccc;font:12px Arial, Helvetica; overflow:auto" align="justify">
+    <p align="center"><b>UNIVERSITY OF CALIFORNIA, SAN DIEGO
+    <br>CONSENT TO ACT AS A RESEARCH SUBJECT</b>
+
+    <p>
+    <br> Timothy Brady, Ph.D., is conducting a research study to find out more about attention, memory and vision.  You have been asked to participate because you are a healthy young adult.  There will be approximately 1600 participants in this study this year. The expected duration of the study is 5 years, though your participation will last only between 3 minutes and 45 minutes, with the exact expected timing listed in the HIT description.</p>
+
+    <p>
+    <br><b>PROCEDURES.</b> If you agree to participate in this study by accepting this HIT and continuing in the task, the following will happen to you:
+    <br> &emsp; 1. You will be shown displays of letters, words, or pictures, right here in your web browser. 
+    <br> &emsp; 2. You will try to perceive and remember these stimuli, and respond by pressing keys or moving and clicking the mouse in a manner that we will describe to you.</p>
+
+    <p>
+    <br> <b>RISKS.</b> You will be required only to continue to interact with your web browser and make responses for a short duration. Thus, no potential risks or discomforts are anticipated except for the possibility that some tasks may be slightly boring. However, there may be risks that are currently unforeseeable.</p>
+
+    <p>
+    <br><b>PAYMENT/REMUNERATION.</b> In consideration of your time, you will receive payment at the rate described through the Amazon Mechanical Turk system. Compensation will range from $0.60 (for a 3 min task) up to as much as $8 (for a task that takes 45 min), with rates between $8/hr and $12/hr. The exact payment rate for this HIT is provided in the HIT description.</p>
+
+    <p>
+    <br><b>RIGHTS.</b> You may call the UCSD Human Research Protection Program at 858-657-5100 to ask about your rights as a research subject or to report research-related problems.</p>
+
+    <p>
+    <br><b>BENEFITS.</b>  There will be no direct benefit to you from these procedures.  However, the investigator may learn more about basic questions pertaining to attention, memory and vision.   This knowledge may have benefits to society in fields ranging from improving education to visual design, but these benefits will be indirect.</p>
+
+    <p>
+    <br><b>EXPLANATION.</b>  The researcher has explained this study to you and answered your questions.  If you have questions about the research or research-related problems, including any adverse events, you may reach Dr. Timothy Brady at timbrady@ucsd.edu or 858-822-4530.</p>
+
+    <p>
+    <br><b>VOLUNTARY NATURE OF PARTICIPATION.</b>  Participation in research is entirely voluntary.  You may refuse to participate or withdraw at any time without penalty. The alternative to participation is to choose not to participate.</p>
+
+    <p>
+    <br><b>CONFIDENTIALITY.</b>  Research records will be kept confidential to the extent allowed by law.  As with all research, there is also the possibility of loss of confidentiality.  Information from participants such as yourself will be identified by a subject number, which is not associated with your identity, by the researchers, to minimize the potential loss of confidentiality.</p> 
+
+    <p>
+    <br>By clicking “I agree”, you are indicating that you are at least 18 years old, have read this consent form and agree to participate in this research study. Please print a copy of this page for your records.</p>
+    </p>
+  </div>
+</div>
+
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+<!-- set CANVAS -->
+<div align="center">
+    <canvas id="myCanvas"  width="400" height="400" style="cursor:default;border:none;outline-width:2px;outline-color:#000000">
+    </canvas>
+    <p id="instr"></p>
+</div>
+
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<div id='frame1'; class='trialDiv'>
+    <p> อยากจะให้ทำอะไรสักอย่าง
+    <br> แต่ยังไม่แน่ใจ
+    <br> เดี๋ยวรูปแล้วจะบอกนะ
+    <br> อดใจรออีกหน่อย
+    
+    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+</div>
+
+<div id='frame2'; class='trialDiv'>
+    <p> 
+    <br> อะไรจะโผล่มาแบบนี้
+    <br> พยายามจำตำแหน่งเอาไว้
+
+    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+</div>
+
+<div id='frame3'; class='trialDiv'>
+    <p> 
+    <br> แล้วก็จะหายไป
+
+    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+</div>
+
+<div id='frame4'; class='trialDiv'>
+    <p> 
+    <br> พอมีสัญญาณให้ตอบก็ตอบได้เลย
+
+    <br> <br> กดลงไปบนกลมๆที่มองเห็นได้เลยเพื่อตอบ </p>
+</div>
+
+<div id='frame5'; class='trialDiv'>
+    <p> 
+    <br> จะเป็นเช่นนี้ไปเรื่อยๆ 
+    <br> พร้อมไหม
+    <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
+</div>
+
+<!--
+//////////////////////////////////////////////////////////////////////////////////
+-->
+
+<p id="debug"></p>
+        <form id="record" action="examplePause.php" name="nextpage" method="post">
+            <input type="hidden" id="targ" name="targ" value='[0,0,0,0,0,0,0,0,0,0,0,0]'>
+            <input type="hidden" id="resp" name="resp" value='[0,0,0,0,0,0,0,0,0,0,0,0]'>
+            <input type="hidden" id="targAng" name="targAng" value='[0,0,0,0,0,0,0,0,0,0,0,0]'>
+            <input type="hidden" id="respAng" name="respAng" value='[0,0,0,0,0,0,0,0,0,0,0,0]'>
+            <input type="hidden" id="rt" name="rt" value='0'>
+        </form>
+
+
+        <script type="text/javascript">
+          
+          // Settings
+          var code = "CC" + Math.round(Math.random()*100000) + "92";
+          var task='Simon';
+          var c1=document.getElementById("myCanvas");
+
+          var ctx1=c1.getContext("2d");    
+          var centerX=c1.width/2;
+          var centerY=c1.height/2;   
+          var width=c1.width;
+          var height=c1.height;
+          var objSize=40;
+          var objDist=120; 
+          var visualang = Math.round((Math.atan(((objSize))/objDist))*(180/Math.PI));
+          // var wheelRad=objSize+objDist+30;
+          var nubX=null;
+          var nubY=null;
+          var nTrials = 10000;
+          var numDots=6;
+          var thetadiff = 360/numDots;
+          var nSeq = 6;
+          var circRot= 0;
+          // var colRot= 0;
+
+          var nullcolor = []; for (var idot =0; idot<numDots;idot++){nullcolor[idot] = '#FFFFFF'}
+          const testtemp = []; for (var idot =0; idot<numDots;idot++){testtemp[idot] = 99999}
+
+          var stimdur = 500;
+          var delay = 500;
+
+          var rt=[];
+          var moveLast=0;
+          
+          var initTime=1000;
+          var presTime=1000;
+          var delayTime=1000;
+          
+          var isTest=false;
+          var isTrain = false;
+          var currProbe=-1;
+          var realstimtime =[]; 
+          var realdelaytime =[];
+
+          // Object positions
+          
+          // Define positions before rotation
+          xTemp=[];
+          yTemp=[];
+          var theta = [];
+          for(i=0;i<numDots;i++){
+              theta.push(Math.round(( ((2*Math.PI/numDots)*i))*(180/Math.PI)))
+              xTemp.push(objDist*Math.cos((2*Math.PI/numDots)*i));
+              yTemp.push(objDist*Math.sin((2*Math.PI/numDots)*i))
+          }
+
+          // Rotate positions
+          xPos=[];
+          yPos=[];
+          
+          for(i=0;i<numDots;i++){
+              xPos.push(centerX-(Math.cos(circRot)*xTemp[i])+(Math.sin(circRot)*yTemp[i]));
+              yPos.push(centerY+(Math.sin(circRot)*xTemp[i])+(Math.cos(circRot)*yTemp[i]))
+          }
+
+          function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+              // Pick a remaining element...
+              randomIndex = Math.floor(Math.random() * currentIndex);
+              currentIndex -= 1;
+
+              // And swap it with the current element.
+              temporaryValue = array[currentIndex];
+              array[currentIndex] = array[randomIndex];
+              array[randomIndex] = temporaryValue;
+            }
+            return array;
+          }
+
+          function paintcolor(colAng){
+            var color=[];
+            for(ic=0;ic<colAng.length;ic++){
+                if (colAng[ic] == 99999){
+                    color[ic]='#FFFFFF'
+                }else{
+                    color[ic]=angle2HEX(colAng[ic])
+                }
+            }
+            return color 
+          }
+
+          function makeCircles(currColor){
+            // Draw circles
+
+            for(i=0;i<numDots;i++){
+                makeCircle('dot'+i,xPos[i],yPos[i],objSize+2,false,0,'#000000','#000000');
+                makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
+                // makeCircle('dotIn'+i,xPos[i],yPos[i],objSize,false,0,currColor[i],currColor[i]);
+            }
+          }
+
+          function makeCrosshair(){
+            // Draw rectangles
+            for(i=0;i<numDots;i++){
+                makeRectangle('cross1',centerX,centerX,2,10,false,'#000000','#000000');
+                makeRectangle('cross2',centerX,centerY,10,2,false,'#000000','#000000');
+            }
+          }
+
+          var st=null;
+          function startTime(){
+              var d = new Date();
+              st=d.getTime();
+          }
+
+          function endTime(){
+              
+              var d = new Date();
+              timeDif=d.getTime()-st;
+              return timeDif;
+          }
+
+          var curTrial = 0;
+          function trialIsOver() {
+              
+              // Initial
+              erase(ctx1);
+              clear();
+              makeCrosshair();
+              drawObjects(ctx1,objects);
+
+              // var curtrialStruct = {};
+              
+              // curtrialStruct.colordist = colordist;
+              // curtrialStruct.stimdur = stimdur;
+              // curtrialStruct.delaytime = alltrldel[curTrial];
+              // curtrialStruct.targcol = alltrlseq[curTrial];
+              // curtrialStruct.testpos = alltstpos[curTrial];
+              // curtrialStruct.trlrot = alltrlrot[curTrial];
+              // curtrialStruct.colorwrot = allcolorwrot[curTrial];
+              // curtrialStruct.tarcode = alltarcode[curTrial];
+              // curtrialStruct.resp = allselCol[curTrial];
+              // curtrialStruct.respAng = allcolAng[curTrial];
+              // curtrialStruct.rt = rt[curTrial];
+              // curtrialStruct.realstim = realstimtime[curTrial];
+              // curtrialStruct.delaytimeReal = realdelaytime[curTrial];
+              // trialStruct.push(curtrialStruct);
+
+
+              // document.getElementById('targ').value=JSON.stringify(color);
+              // document.getElementById('resp').value=JSON.stringify(selColor);
+              // document.getElementById('respAng').value=JSON.stringify(selAng);
+              // document.getElementById('targAng').value=JSON.stringify(targAng);
+              // document.getElementById('rt').value=JSON.stringify(rt);
+
+              curTrial = curTrial+1 ; 
+
+              if (curTrial >= nTrials){
+                  Done();
+                  // $('#submitButton'.show());
+              } else {
+                  // var selColor=[];var selAng=[];
+                  // for (var item=0;item<numDots;item++){selColor[item]='#FFFFFF';selAng[item]=null};
+                  showTrial(curTrial);
+                  startTrialTime = new Date();
+              }
+
+          }
+
+          function showTrial(){
+             isTest= false;
+             var xx = Math.floor(Math.random()*360);
+             const dotid = []; for (var idot =0; idot<numDots;idot++){dotid[idot] = idot}
+
+             var testcolors = [];
+             for (var iSeq=0; iSeq < nSeq; iSeq++){
+                const temp = Object.values(Object.assign({}, testtemp));
+                if (iSeq ==0){
+                  const updateArr = Object.values(Object.assign({}, dotid));
+                  shuffle(updateArr)
+                  var lastpos = [updateArr[0]]
+                }
+                else {
+                  const updateArr = Object.values(Object.assign({}, dotid)); 
+                  updateArr.splice(lastpos[lastpos.length-1],1)
+                  shuffle(updateArr)
+                  lastpos.push(updateArr[0])
+                }
+                temp[lastpos[iSeq]] = xx;
+                console.log(lastpos)
+                tempcolor = paintcolor(temp);
+                testcolors.push(tempcolor);
+             }
+             
+             setthistime = [initTime];
+             for (iSeq=0;iSeq < nSeq; iSeq++){ 
+                setthistime.push(setthistime[setthistime.length-1]+stimdur)
+                setthistime.push(setthistime[setthistime.length-1]+delay)
+             }
+
+             
+             for (iSeq=0;iSeq < nSeq; iSeq++){  
+                initialT(testcolors[iSeq],setthistime[2*iSeq]);
+                RemoveStim(setthistime[(2*iSeq)+1]);
+                if (iSeq == nSeq-1){
+                  Cue(setthistime[setthistime.length]);
+                }
+             }
+          }
+
+
+          function initialT(color,waittime){
+            // Initial
+            
+            setTimeout(function(){
+                // Draw stimuli
+                erase(ctx1);
+                clear();
+                makeCrosshair();
+                makeCircles(color);
+                drawObjects(ctx1,objects);
+                var dT = new Date();
+                STT=dT.getTime();
+            },waittime);
+          }
+            
+
+          function RemoveStim(waittime2){    
+            // Remove stimuli
+            setTimeout(function(){
+                erase(ctx1);
+                clear();
+                makeCrosshair();
+                makeCircles(nullcolor);
+                //makeCircles(['#FFFFFF','#FFFFFF','#FFFFFF']);
+                drawObjects(ctx1,objects);
+                var dST = new Date();
+                realstimtime.push(dST.getTime()-STT);
+                var dST2 = new Date();
+                ST2 = dST2.getTime();
+            },waittime2);
+          }
+
+
+          function Cue(waittime3){
+            // Cue
+            setTimeout(function(){
+                var dST3 = new Date();
+                //realdelaytime.push(dST3.getTime()-ST2);
+                erase(ctx1);
+                clear();
+                
+                currProbe=0;
+                moveLast = 0 ;
+                makeCrosshair();
+                makeCircles(nullcolor);
+                drawObjects(ctx1,objects);
+                startTime();
+                console.log('now!')
+                isTest=true;
+            },waittime3);
+        }
+
+        function showFirstTrial() {
+            isTrain = false;
+            // Draw first fixation 
+            makeCrosshair();
+            drawObjects(ctx1,objects);
+            // Begin
+            showTrial();
+            startTrialTime = new Date();
+            $('.trialDiv').hide();
+
+        }
+
+        function showPractice_f1(){
+            if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
+                $('#instructions').hide();
+                myCanvas.style.border = 'solid' 
+                 // Draw first fixation 
+                makeCrosshair();
+                makeCircles(nullcolor);
+                drawObjects(ctx1,objects);
+                $('#frame1').show();
+                // Begin
+                $(document).on("keypress.trialWait", PressedKey);
+
+                function PressedKey(evt) {
+                  evt.preventDefault(); 
+                    if (evt.which == 32) {
+                        showPractice_f2();
+                    }
+                }
+            }
+
+        }
+
+        function showPractice_f2(){
+            $('#frame1').hide();
+            var jj = Math.round(Math.random(1)*numDots);
+            const temp = Object.values(Object.assign({}, testtemp));
+            temp[jj] = 20;
+            testcolor = paintcolor(temp);
+            makeCrosshair();
+            makeCircles(testcolor);
+            drawObjects(ctx1,objects);
+            $('#frame2').show();
+            $(document).on("keypress.trialWait", PressedKey);
+            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f3();}}
+        }
+
+        function showPractice_f3(){
+            $('#frame2').hide();
+            makeCrosshair();
+            makeCircles(nullcolor);
+            drawObjects(ctx1,objects);
+            $('#frame3').show();
+            $(document).on("keypress.trialWait", PressedKey);
+            function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f4();}}
+        }
+
+        function showPractice_f4(){
+
+                order = [0,3]; 
+                wrot = 0;  
+                // isTrain = true;
+                // console.log(order)
+                $('#frame3').hide();
+                currProbe=0;
+                makeCrosshair();
+                drawObjects(ctx1,objects);
+                
+                $('#frame4').show();
+                $(document).on("keypress.trialWait", PressedKey);
+              function PressedKey(evt) { evt.preventDefault(); if (evt.which == 32) {showPractice_f5();}}
+        }
+
+        function showPractice_f5(){
+            
+            $(document).off("keypress.trialWait");
+            console.log(isTrain);
+            $('#frame4').hide();
+            erase(ctx1);
+            clear();
+            makeCrosshair();
+            makeCircles(nullcolor);
+            drawObjects(ctx1,objects);
+            $('#frame5').show();
+            $(document).on("keypress.trialWait", function press4 (evt) { evt.preventDefault();  if (IsTurkPreview() == true) {showFirstTrial();}});
+        }
+
+        function Done() {
+
+            $("#myCanvas").hide();
+              $("#done").show();
+
+              var dataToServer = {};
+              dataToServer.id = getParameterByName("subjectId"); /* getParameterByName("code") */
+              dataToServer.experimenter = 'Chaipat';
+              dataToServer.experimentName = 'WMcolordist_delay';
+              dataToServer.curData = JSON.stringify(trialStruct);
+              $.post("https://psyc241.ucsd.edu/Turk/save.php", dataToServer, AfterSuccessDataSaving).fail(AfterFailedSaving);
+        }
+
+        function AfterSuccessDataSaving() {
+          // After they are done, send them here:
+          // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");
+          $('#submitButton').show();
+          $('#done').html("All done, thanks! Please click submit button.");
+          
+          console.log("Saved!");
+        }
+
+        function AfterFailedSaving() {
+          console.log("oops, failed to save");
+
+          // window.location = "https://ucsd.sona-systems.com/webstudy_credit.aspx?experiment_id=1267&credit_token=805f6634de5a46b3aecffe2818d8d90c&survey_code=" + getParameterByName("code");  
+          $('#submitButton').show();
+          $('#done').html("All done, thanks! Please click submit button.");
+
+        }
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+        // ========================================================= 
+        $('#startExperiment').click(showPractice_f1);
+        $('.responseButton').click(trialIsOver);
+        // =========================================================
+
+        /**
+         * Gets a URL parameter from the query string
+         */
+        function turkGetParam( name, defaultValue ) { 
+           var regexS = "[\?&]"+name+"=([^&#]*)"; 
+           var regex = new RegExp( regexS ); 
+           var tmpURL = window.location.href; 
+           var results = regex.exec( tmpURL ); 
+           if( results == null ) { 
+             return defaultValue; 
+           } else { 
+             return results[1];    
+           } 
+        }
+
+        function GetWorkerId() {
+          var workerId = turkGetParam( 'workerId', 'NONE' );
+          return workerId;
+        } 
+
+        function IsTurkPreview() {
+          return GetWorkerId() == "NONE";
+        } 
+
+        function IsOnTurk() {
+          try {
+            return ((window.location.host.indexOf('mturk')!=-1) || document.forms["mturk_form"] ||
+              (top != self && window.parent.location.host.indexOf("mturk") != -1));
+          } catch(err) {
+            // insecure content trying to access https://turk probably, so say yes:
+            return true;
+          }
+        }
+        </script>
+
+
