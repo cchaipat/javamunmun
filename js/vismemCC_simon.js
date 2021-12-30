@@ -340,8 +340,8 @@ $(document).on("mousedown", function(e) {
     inBound=e.target.id=='myCanvas';
     hasMoved=moveLast>10;
     waitTime=endTime();
-    hasWaited=waitTime>150;
-    if(isTest & currProbe>=0 & inBound & hasMoved & hasWaited){
+    hasWaited=waitTime>300;
+    if(isTest & currProbe>=0 & inBound & hasMoved & hasWaited & iamin){
         currProbe = currProbe+1;
         moveLast=0;
         rt.push(endTime());
@@ -356,6 +356,8 @@ $(document).on("mousedown", function(e) {
         makeCrosshair();
         makeCircles(thiscolor2,thiscolor);
         drawObjects(ctx1,objects);
+        var audio = document.getElementById(beeplist[currProbe]);
+        audio.play();
 
         if (currProbe==nSeq){
             erase(ctx1);
@@ -412,8 +414,9 @@ $(document).on("mousemove", function(e) {
         }
 
         thetafrom = thetadiff/2-Math.abs((wholeDegree % thetadiff)-thetadiff/2)
-
+        iamin = false
         if ((dist>(objDist-objSize)) && (dist<(objDist+objSize))  && (Math.abs(thetafrom)<visualang)) {
+            iamin = true;
             const thistemp = Object.values(Object.assign({}, testtemp)); 
             idx = Math.round(wholeDegree / thetadiff);
             if (idx == numDots) {idx=0}

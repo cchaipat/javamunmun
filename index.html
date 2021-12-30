@@ -27,6 +27,10 @@
     body {
       font-family: Arial, Helvetica;
       font-size: 12pt;
+      background-image: linear-gradient(180deg, slategray, darkgray);
+      height: 100%; 
+      /*background-color: slategray;*/
+      /*background-image: url("pic/61ce0c2a48c65.jpg");*/
     }
 
     #submitButton {
@@ -102,7 +106,26 @@ Saving data...
 <!-- make submit button -->
 <input type="submit" value="Submit" name="submitButton" id="submitButton" style="display: none">
 
+<audio id="audio1" src="sounds/trimbeep.wav"></audio>
+<audio id="audio2" src="sounds/trimbeep.wav"></audio>
+<audio id="audio3" src="sounds/trimbeep.wav"></audio>
+<audio id="audio4" src="sounds/trimbeep.wav"></audio>
+<audio id="audio5" src="sounds/trimbeep.wav"></audio>
+<audio id="audio6" src="sounds/trimbeep.wav"></audio>
+<audio id="audio7" src="sounds/trimbeep.wav"></audio>
+<audio id="audio8" src="sounds/trimbeep.wav"></audio>
+<audio id="audio9" src="sounds/trimbeep.wav"></audio>
 
+<audio id="do" src="sounds/do.wav"></audio>
+<audio id="re" src="sounds/re.wav"></audio>
+<audio id="fa" src="sounds/fa.wav"></audio>
+<audio id="mi" src="sounds/mi.wav"></audio>
+<audio id="sol" src="sounds/sol.wav"></audio>
+<audio id="la" src="sounds/la.wav"></audio>
+<audio id="ti" src="sounds/ti.wav"></audio>
+
+<audio id="backgroundsound" src="sounds/ocean-waves.wav"></audio>
+<audio id="backgroundsound2" src="sounds/dreamscape.wav"></audio>
 <!--
 //////////////////////////////////////////////////////////////////////////////////
 -->
@@ -169,7 +192,7 @@ Saving data...
 -->
 <!-- set CANVAS -->
 <div align="center">
-    <canvas id="myCanvas"  width="400" height="400" style="cursor:default;border:none;outline-width:2px;outline-color:#000000">
+    <canvas id="myCanvas"  width="600" height="600" style="cursor:default;border:none;outline-width:2px;outline-color:#000000">
     </canvas>
     <p id="instr"></p>
 </div>
@@ -232,8 +255,8 @@ Saving data...
 
 <div id='rule0'; class='trialDiv'>
     <p> 
-    <br> ถ้าพื้นหลังเป็น <font color="#8abaae"> <b>สีเขียว</b> </font> ให้กดปุ่ม <b>ตามลำดับ</b> ที่จำไว้
-    <br> ถ้าพื้นหลังเป็น <font color="#f1959b"> <b>สีแดง</b> </font> ให้กดปุ่มต <b>ย้อนกลับ</b> จากลำดับที่จำไว้
+    <br> ถ้าพื้นหลังเป็น <font color=darkgreen> <b>สีเขียว</b> </font> ให้กดปุ่ม <b>ตามลำดับ</b> ที่จำไว้
+    <br> ถ้าพื้นหลังเป็น <font color=darkred> <b>สีแดง</b> </font> ให้กดปุ่ม <b>ย้อนกลับ</b> จากลำดับที่จำไว้
 
     <br> <br> กรุณาใช้ <b>เมาส์</b> กดลงบนปุ่ม </p>
 </div>
@@ -270,8 +293,8 @@ Saving data...
           var centerY=c1.height/2;   
           var width=c1.width;
           var height=c1.height;
-          var objSize=40;
-          var objDist=120; 
+          var objSize=60;
+          var objDist=180; 
           var visualang = Math.round((Math.atan(((objSize))/objDist))*(180/Math.PI));
           // var wheelRad=objSize+objDist+30;
           var nubX=null;
@@ -279,13 +302,17 @@ Saving data...
           var nTrials = 10000;
           var numDots=6;
           var thetadiff = 360/numDots;
-          var nSeq = 4;
+          var nSeq = 6;
           var circRot= 0;
           // var colRot= 0;
           var circcolor = '#D3D3D3';    // light gray
           var hovercolor = '#FFFFFF';   // dark gray
           var clickedcolor = '#FFFFFF'; // white
           var circborder = '#000000';   // black
+          var soundlists = ['do','mi','sol','re','fa','la','ti'];
+          var soundlist = []; for (var iSeq =0; iSeq<nSeq;iSeq++){soundlist[iSeq] = soundlists[iSeq]}
+
+          var beeplist = ['audio1','audio2','audio3','audio4','audio5','audio6','audio7','audio8','audio9'];
 
 
           var nullcolor = []; for (var idot =0; idot<numDots;idot++){nullcolor[idot] = circcolor}
@@ -309,6 +336,7 @@ Saving data...
           var bgx = Math.round(Math.random());
           var isTest=false;
           var isTrain = false;
+          var iamin = false;
           var currProbe=-1;
           var realstimtime =[]; 
           var realdelaytime =[];
@@ -388,15 +416,15 @@ Saving data...
 
           function makeBackground(bgcolor){
             // Fill background
-                makeRectangle('bg',centerX,centerX,400,400,false,bgcolor,bgcolor);
+                makeRectangle('bg',centerX,centerX,600,600,false,bgcolor,bgcolor);
              
           }
 
           function makeCrosshair(){
             // Draw rectangles
             for(i=0;i<numDots;i++){
-                makeRectangle('cross1',centerX,centerX,2,10,false,'#000000','#000000');
-                makeRectangle('cross2',centerX,centerY,10,2,false,'#000000','#000000');
+                makeRectangle('cross1',centerX,centerX,6,40,false,'#000000','#000000');
+                makeRectangle('cross2',centerX,centerY,40,6,false,'#000000','#000000');
             }
           }
 
@@ -477,6 +505,7 @@ Saving data...
              makeCrosshair();
              drawObjects(ctx1,objects);
 
+             Shuffle(soundlist);
              var xx = Math.floor(Math.random()*360);
              const dotid = []; for (var idot =0; idot<numDots;idot++){dotid[idot] = idot}
 
@@ -508,7 +537,7 @@ Saving data...
 
              
              for (iSeq=0;iSeq < nSeq; iSeq++){  
-                initialT(testcolors[iSeq],setthistime[2*iSeq]);
+                initialT(testcolors[iSeq],setthistime[2*iSeq],soundlist[iSeq]);
                 RemoveStim(setthistime[(2*iSeq)+1]);
                 if (iSeq == nSeq-1){
                   Cue(setthistime[setthistime.length-1]);
@@ -516,7 +545,7 @@ Saving data...
              }
           }
 
-          function initialT(color,waittime){
+          function initialT(color,waittime,sound){
             // Initial
             
             setTimeout(function(){
@@ -528,7 +557,8 @@ Saving data...
                 makeCircles(color,borders);
                 makeCrosshair();
                 drawObjects(ctx1,objects);
-
+                var audio = document.getElementById(sound);
+                audio.play();
                 var dT = new Date();
                 STT=dT.getTime();
             },waittime);
@@ -606,6 +636,29 @@ Saving data...
         }
 
         function showPractice_f1(){
+            document.getElementById("backgroundsound").loop = true;
+            var bgsound = document.getElementById('backgroundsound');
+            document.getElementById("backgroundsound2").loop = true;
+            var bgsound2 = document.getElementById('backgroundsound2');
+
+            var vol = 0.00;
+            var interval = 100; // 200ms interval
+
+            var fadein= setInterval(
+              function() {
+                if (vol < 0.3) {
+                  vol += 0.05;
+                  bgsound.volume = vol;
+                  bgsound2.volume = vol+0.4;
+                }
+                else {
+                  // Stop the setInterval when 0 is reached
+                  clearInterval(fadein);
+                }
+              }, interval);
+            bgsound.play();
+            bgsound2.play();
+
             if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
                 $('#instructions').hide();
                 myCanvas.style.border = 'solid' 
@@ -615,7 +668,10 @@ Saving data...
                 drawObjects(ctx1,objects);
                 $('#frame1').show();
                 // Begin
-                $('#cont1').on('click',showPractice_f2);
+                $('#cont1').on('click',pressed);
+                function pressed(){
+                  showPractice_f2();
+                }
             }
 
         }
@@ -659,11 +715,9 @@ Saving data...
         }
 
         function showPractice_f5(){
-            
-            $(document).off("keypress.trialWait");
-            console.log(isTrain);
+
             $('#frame4').hide();
-            erase(ctx1);
+            // erase(ctx1);
             clear();
             makeCrosshair();
             makeCircles(nullcolor,borders);
