@@ -194,6 +194,20 @@ Saving data...
     <br> <br> กรุณากด <b>แท่งยาวๆ</b> เพื่อไปต่อ</p>
 </div>
 
+<div id='rule0'; class='trialDiv'>
+    <p> 
+    <br> ให้กดปุ่มตามลำดับที่จำไว้
+    <br> 
+    <br> <br> กรุณาใช้ <b>เมาส์</b> กดลงบนปุ่ม </p>
+</div>
+
+<div id='rule1'; class='trialDiv'>
+    <p> 
+    <br> ให้กดปุ่มย้อนกลับจากลำดับที่จำไว้
+    <br> 
+    <br> <br> กรุณาใช้ <b>เมาส์</b> กดลงบนปุ่ม </p>
+</div>
+
 <!--
 //////////////////////////////////////////////////////////////////////////////////
 -->
@@ -214,8 +228,7 @@ Saving data...
           var code = "CC" + Math.round(Math.random()*100000) + "92";
           var task='Simon';
           var c1=document.getElementById("myCanvas");
-
-          var ctx1=c1.getContext("2d");    
+          var ctx1=c1.getContext("2d");   
           var centerX=c1.width/2;
           var centerY=c1.height/2;   
           var width=c1.width;
@@ -229,7 +242,7 @@ Saving data...
           var nTrials = 10000;
           var numDots=6;
           var thetadiff = 360/numDots;
-          var nSeq = 6;
+          var nSeq = 4;
           var circRot= 0;
           // var colRot= 0;
 
@@ -245,7 +258,10 @@ Saving data...
           var initTime=3000;
           var presTime=1000;
           var delayTime=1000;
-          
+          var feedbacktime=1000;
+
+          var bgcolor = ["#f1959b","#8abaae"];
+          var bgx = Math.round(Math.random());
           var isTest=false;
           var isTrain = false;
           var currProbe=-1;
@@ -313,6 +329,12 @@ Saving data...
             }
           }
 
+          function makeBackground(bgcolor){
+            // Fill background
+                makeRectangle('bg',centerX,centerX,400,400,false,bgcolor,bgcolor);
+             
+          }
+
           function makeCrosshair(){
             // Draw rectangles
             for(i=0;i<numDots;i++){
@@ -335,14 +357,17 @@ Saving data...
           }
 
           var curTrial = 0;
+          
           function trialIsOver() {
               
               // Initial
               erase(ctx1);
               clear();
+              makeBackground(bgcolor[bgx])
               makeCrosshair();
               drawObjects(ctx1,objects);
-
+              $('#rule0').hide();
+              $('#rule1').hide();
               // var curtrialStruct = {};
               
               // curtrialStruct.colordist = colordist;
@@ -375,6 +400,8 @@ Saving data...
               } else {
                   // var selColor=[];var selAng=[];
                   // for (var item=0;item<numDots;item++){selColor[item]='#FFFFFF';selAng[item]=null};
+                  // $('#rule0').hide();
+                  // $('#rule1').hide();
                   showTrial(curTrial);
                   startTrialTime = new Date();
               }
@@ -383,6 +410,25 @@ Saving data...
 
           function showTrial(){
              isTest= false;
+             if (Math.random()>0.2){
+               bgx = Math.abs(bgx-1); 
+             }
+
+             erase(ctx1);
+             clear();
+             
+             makeBackground(bgcolor[bgx])
+             makeCircles(nullcolor);
+             makeCrosshair();
+             drawObjects(ctx1,objects);
+             if (bgx == 0){
+                  $('#rule0').show();
+             }
+             else {
+                  $('#rule1').show();
+             }
+             
+
              var xx = Math.floor(Math.random()*360);
              const dotid = []; for (var idot =0; idot<numDots;idot++){dotid[idot] = idot}
 
@@ -433,8 +479,10 @@ Saving data...
                 // Draw stimuli
                 erase(ctx1);
                 clear();
-                makeCrosshair();
+                
+                makeBackground(bgcolor[bgx])
                 makeCircles(color);
+                makeCrosshair();
                 drawObjects(ctx1,objects);
                 var dT = new Date();
                 STT=dT.getTime();
@@ -447,9 +495,9 @@ Saving data...
             setTimeout(function(){
                 erase(ctx1);
                 clear();
-                makeCrosshair();
+                makeBackground(bgcolor[bgx])
                 makeCircles(nullcolor);
-                //makeCircles(['#FFFFFF','#FFFFFF','#FFFFFF']);
+                makeCrosshair();
                 drawObjects(ctx1,objects);
                 var dST = new Date();
                 realstimtime.push(dST.getTime()-STT);
@@ -469,20 +517,39 @@ Saving data...
                 
                 currProbe=0;
                 moveLast = 0 ;
-                makeCrosshair();
+                makeBackground(bgcolor[bgx])
                 makeCircles(nullcolor);
+                makeCrosshair();
                 drawObjects(ctx1,objects);
+                
+                
                 startTime();
                 console.log('now!')
                 isTest=true;
             },waittime3);
         }
 
+        function Feedback(){    
+            // Remove stimuli
+            setTimeout(function(){
+                erase(ctx1);
+                clear();
+                makeBackground(bgcolor[bgx])
+                makeCircles(nullcolor);
+                makeCrosshair();
+                drawObjects(ctx1,objects);
+                trialIsOver();
+            },feedbacktime);
+          }
+
         function showFirstTrial() {
             isTrain = false;
+
+
             // Draw first fixation 
-            makeCrosshair();
-            drawObjects(ctx1,objects);
+            // makeCrosshair();
+            // drawObjects(ctx1,objects);
+
             // Begin
             showTrial();
             startTrialTime = new Date();

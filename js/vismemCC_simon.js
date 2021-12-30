@@ -348,6 +348,11 @@ $(document).on("mousedown", function(e) {
         startTime();
         if (currProbe==nSeq){
             erase(ctx1);
+            clear();
+            makeBackground(bgcolor[bgx])
+            makeCrosshair();
+            drawObjects(ctx1,objects);
+
                 isTest = false;
                 // allselCol.push(JSON.stringify(selColor));
                 // allcolAng.push(JSON.stringify(selAng));
@@ -356,7 +361,7 @@ $(document).on("mousedown", function(e) {
                 // document.getElementById('targAng').value=JSON.stringify(targAng);
                 // document.getElementById('respAng').value=JSON.stringify(selAng);
                 // document.getElementById('rt').value=JSON.stringify(rt);
-                trialIsOver();
+                Feedback();
         }
         
     }else if(isTest & !hasMoved){
@@ -402,11 +407,12 @@ $(document).on("mousemove", function(e) {
             idx = Math.round(wholeDegree / thetadiff);
             if (idx == numDots) {idx=0}
 
-            thistemp[idx] = 20;
-            console.log(wholeDegree)
+            // thistemp[idx] = 20;
             thiscolor = paintcolor(thistemp);
+            thiscolor[idx] = '#D3D3D3'
             erase(ctx1);
             clear();
+            makeBackground(bgcolor[bgx])
             makeCrosshair();
             makeCircles(thiscolor);
             drawObjects(ctx1,objects);
@@ -416,6 +422,7 @@ $(document).on("mousemove", function(e) {
             thiscolor = paintcolor(testtemp);
             erase(ctx1);
             clear();
+            makeBackground(bgcolor[bgx])
             makeCrosshair();
             makeCircles(thiscolor);
             drawObjects(ctx1,objects);
