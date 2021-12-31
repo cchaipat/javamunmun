@@ -312,8 +312,7 @@ Saving data...
           var soundlists = ['do','mi','sol','re','fa','la','ti'];
           var soundlist = []; for (var iSeq =0; iSeq<nSeq;iSeq++){soundlist[iSeq] = soundlists[iSeq]}
 
-          var beeplist = ['do','mi','sol','re','fa','la','ti']; 
-          // ['audio1','audio2','audio3','audio4','audio5','audio6','audio7','audio8','audio9'];
+          var beeplist = ['audio1','audio2','audio3','audio4','audio5','audio6','audio7','audio8','audio9'];
 
 
           var nullcolor = []; for (var idot =0; idot<numDots;idot++){nullcolor[idot] = circcolor}
@@ -642,24 +641,31 @@ Saving data...
             document.getElementById("backgroundsound2").loop = true;
             var bgsound2 = document.getElementById('backgroundsound2');
 
-            var vol = 0.00;
-            var interval = 100; // 200ms interval
+            // var vol = 0.00;
+            // var interval = 100; // 200ms interval
 
-            var fadein= setInterval(
-              function() {
-                if (vol < 0.3) {
-                  vol += 0.05;
-                  bgsound.volume = vol;
-                  bgsound2.volume = vol+0.4;
-                }
-                else {
-                  // Stop the setInterval when 0 is reached
-                  clearInterval(fadein);
-                }
-              }, interval);
+            // var fadein= setInterval(
+            //   function() {
+            //     if (vol < 0.3) {
+            //       vol += 0.05;
+            //       bgsound.volume = vol;
+            //       bgsound2.volume = vol+0.4;
+            //     }
+            //     else {
+            //       // Stop the setInterval when 0 is reached
+            //       clearInterval(fadein);
+            //     }
+            //   }, interval)
+            bgsound2.volume = 0.4;
+            bgsound.volume = 0.3;
             bgsound.play();
             bgsound2.play();
 
+            for (isound = 0; isound<beeplist.length; isound++){
+              var tempaudio = document.getElementById(beeplist[isound]);
+              tempaudio.play();
+              tempaudio.pause();
+            }
             if ($(window).width() >= 600 && screen.width*.8 < $(window).width()){
                 $('#instructions').hide();
                 myCanvas.style.border = 'solid' 
