@@ -356,8 +356,9 @@ $(document).on("mousedown", function(e) {
         makeCrosshair();
         makeCircles(thiscolor2,thiscolor);
         drawObjects(ctx1,objects);
-        var audio = document.getElementById(beeplist[currProbe]);
-        audio.play();
+        // var audio = document.getElementById(beeplist[currProbe]);
+        // audio.play();
+        beeps[currProbe-1].play()
 
         if (currProbe==nSeq){
             erase(ctx1);
