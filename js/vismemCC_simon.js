@@ -340,12 +340,26 @@ $(document).on("mousedown", function(e) {
     inBound=e.target.id=='myCanvas';
     hasMoved=moveLast>10;
     waitTime=endTime();
-    hasWaited=waitTime>150;
-    if(isTest & currProbe>=0 & inBound & hasMoved & hasWaited){
+    hasWaited=waitTime>300;
+    if(isTest & currProbe>=0 & inBound & hasMoved & hasWaited & iamin){
         currProbe = currProbe+1;
         moveLast=0;
         rt.push(endTime());
         startTime();
+
+        const thistemp2 = Object.values(Object.assign({}, testtemp)); 
+        thiscolor2 = paintcolor(thistemp2);
+        thiscolor2[idx] = clickedcolor;
+        erase(ctx1);
+        clear();
+        makeBackground(bgcolor[bgx])
+        makeCrosshair();
+        makeCircles(thiscolor2,thiscolor);
+        drawObjects(ctx1,objects);
+        // var audio = document.getElementById(beeplist[currProbe]);
+        // audio.play();
+        beeps[currProbe-1].play()
+
         if (currProbe==nSeq){
             erase(ctx1);
             clear();
@@ -401,30 +415,31 @@ $(document).on("mousemove", function(e) {
         }
 
         thetafrom = thetadiff/2-Math.abs((wholeDegree % thetadiff)-thetadiff/2)
-
+        iamin = false
         if ((dist>(objDist-objSize)) && (dist<(objDist+objSize))  && (Math.abs(thetafrom)<visualang)) {
+            iamin = true;
             const thistemp = Object.values(Object.assign({}, testtemp)); 
             idx = Math.round(wholeDegree / thetadiff);
             if (idx == numDots) {idx=0}
 
             // thistemp[idx] = 20;
-            thiscolor = paintcolor(thistemp);
-            thiscolor[idx] = '#D3D3D3'
+            thiscolor = paintborder(thistemp);
+            thiscolor[idx] = hovercolor;
             erase(ctx1);
             clear();
             makeBackground(bgcolor[bgx])
             makeCrosshair();
-            makeCircles(thiscolor);
+            makeCircles(nullcolor,thiscolor);
             drawObjects(ctx1,objects);
         }
         else {
-            const thistemp = Object.values(Object.assign({}, testtemp));
-            thiscolor = paintcolor(testtemp);
+            // const thistemp = Object.values(Object.assign({}, testtemp));
+            // thiscolor = paintcolor(testtemp);
             erase(ctx1);
             clear();
             makeBackground(bgcolor[bgx])
             makeCrosshair();
-            makeCircles(thiscolor);
+            makeCircles(nullcolor,borders);
             drawObjects(ctx1,objects);
         }
         
